@@ -375,6 +375,45 @@
   }
   footer a:hover{color:var(--rust);}
 
+  /* ---------- EVENT LIST (Oggi) ---------- */
+  .event-list{
+    border-top:1px solid var(--line-strong);
+  }
+  .event-row{
+    display:grid;
+    grid-template-columns:90px 1fr auto auto;
+    align-items:center;
+    gap:24px;
+    padding:22px 4px;
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+    transition:background .15s ease, padding-left .15s ease;
+  }
+  .event-row:hover{background:var(--paper-2); padding-left:14px;}
+  .event-row .etime{
+    font-family:var(--mono); font-size:15px; color:var(--rust); font-weight:500;
+  }
+  .event-row .ename-wrap h4{
+    font-family:var(--display); font-size:21px; font-weight:500; line-height:1.15;
+  }
+  .event-row .ename-wrap .evenue{
+    font-size:13px; color:var(--muted); margin-top:4px;
+  }
+  .event-row .egenre{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--muted);
+    border:1px solid var(--line-strong);
+    padding:6px 12px;
+    border-radius:100px;
+    white-space:nowrap;
+  }
+  .event-row .earrow{font-size:18px; color:var(--muted); transition:transform .2s ease, color .2s ease;}
+  .event-row:hover .earrow{transform:translate(3px,-3px); color:var(--rust);}
+  @media(max-width:680px){
+    .event-row{grid-template-columns:60px 1fr; row-gap:10px;}
+    .event-row .egenre, .event-row .earrow{display:none;}
+  }
+
   .view{display:none;}
   .view.active{display:block;}
 
@@ -424,19 +463,19 @@
     <p class="lede">Raccogliamo e organizziamo i locali live di Milano per aiutarti a scegliere la tua serata. Nessun tracciamento, nessun cookie. Solo la musica che ami, senza sorveglianza.</p>
 
     <div class="hero-stats">
-      <div class="stat"><div class="num">13</div><div class="lab">locali in archivio</div></div>
+      <div class="stat"><div class="num" id="stat-eventi">6</div><div class="lab">eventi oggi</div></div>
+      <div class="stat"><div class="num">13</div><div class="lab">locali attivi</div></div>
       <div class="stat"><div class="num">7</div><div class="lab">generi musicali</div></div>
-      <div class="stat"><div class="num">9</div><div class="lab">zone coperte</div></div>
       <div class="stat"><div class="num">001</div><div class="lab">edizione</div></div>
     </div>
   </div>
 
   <div class="section wrap">
     <div class="section-head">
-      <h3>In <em>evidenza</em> questa settimana</h3>
-      <div class="meta">selezione redazionale</div>
+      <h3>Eventi <em>in programma</em> oggi</h3>
+      <div class="meta" id="oggi-date-meta">—</div>
     </div>
-    <div class="venue-grid" id="featured-grid"></div>
+    <div class="event-list" id="event-list"></div>
   </div>
 
 </section>
@@ -517,7 +556,7 @@
 </div>
 
 <footer class="wrap">
-  <span>SuonaMilano è una ideazione indipendente · © 2026</span>
+  <span>SuonaMilano è una ideazione Nycheia · © 2026</span>
   <span>Dati aggiornati periodicamente · <a href="#" onclick="switchView('contatti'); return false;">+ Segnala un locale</a></span>
 </footer>
 
@@ -700,7 +739,37 @@ const venues = [
   },
 ];
 
-// ===================== VIEW SWITCH =====================
+// ===================== DATI EVENTI (oggi) =====================
+// venueIdx fa riferimento alla posizione nell'array "venues" qui sopra
+const events = [
+  { time:"19:00", title:"Aperitivo Jazz Trio", venueIdx:11 }, // Jazz Café Milano
+  { time:"20:30", title:"Serata Blues — Memphis Roots", venueIdx:5 }, // Blues Canal
+  { time:"21:00", title:"Quartetto d'archi & voce", venueIdx:6 }, // Nidaba Theatre
+  { time:"21:30", title:"Citrus Sun — Acid Jazz Night", venueIdx:0 }, // Blue Note
+  { time:"22:00", title:"Hip-Hop Cypher Live", venueIdx:9 }, // Biko Club
+  { time:"23:00", title:"Detune Sessions — Deep Techno", venueIdx:10 }, // Detune
+];
+
+function renderEvents(){
+  const html = events.map(e=>{
+    const v = venues[e.venueIdx];
+    return `
+    <div class="event-row" onclick="openDrawer(${e.venueIdx})">
+      <div class="etime">${e.time}</div>
+      <div class="ename-wrap">
+        <h4>${e.title}</h4>
+        <div class="evenue">${v.name} · ${v.zone}</div>
+      </div>
+      <div class="egenre">${v.genre}</div>
+      <div class="earrow">↗</div>
+    </div>`;
+  }).join('');
+  document.getElementById('event-list').innerHTML = html;
+  document.getElementById('stat-eventi').textContent = events.length;
+  const d = new Date();
+  document.getElementById('oggi-date-meta').textContent = d.toLocaleDateString('it-IT', {weekday:'long', day:'numeric', month:'long'});
+}
+renderEvents();
 function switchView(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
@@ -724,10 +793,6 @@ function venueCard(v, idx){
     <div class="zone"><span>${v.zone}</span><span class="rating">★ ${v.rating}</span></div>
   </div>`;
 }
-
-// featured = primi 6 ordinati per rating
-const featured = [...venues].sort((a,b)=>b.rating-a.rating).slice(0,6);
-document.getElementById('featured-grid').innerHTML = featured.map(v=>venueCard(v, venues.indexOf(v))).join('');
 
 // tutti i locali
 function renderLocaliGrid(filter='tutti'){
