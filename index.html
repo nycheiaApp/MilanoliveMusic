@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuonaMilano · Oggi</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --ink:#1b1b18;
+    --paper:#f3efe6;
+    --paper-2:#eae3d3;
+    --rust:#b5481f;
+    --rust-deep:#8c3416;
+    --line:#1b1b1822;
+    --line-strong:#1b1b1845;
+    --muted:#6b6557;
+    --display: 'Fraunces', serif;
+    --body: 'Space Grotesk', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:200;
+    opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+
+  ::selection{background:var(--rust); color:var(--paper);}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- MASTHEAD ---------- */
+  .topline{
+    border-bottom:1px solid var(--line);
+  }
+  .topline-inner{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted);
+    padding:9px 0;
+  }
+  .topline-inner span.dot{color:var(--rust); margin:0 2px;}
+
+  header.masthead{
+    border-bottom:3px solid var(--ink);
+    padding:30px 0 0 0;
+  }
+  .masthead-row{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    padding-bottom:22px;
+  }
+  .brand h1{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(40px, 6vw, 74px);
+    letter-spacing:-0.01em;
+    line-height:.92;
+  }
+  .brand h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--rust);
+  }
+  .brand .tagline{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:8px;
+  }
+  .masthead-right{
+    text-align:right;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+
+  nav.mainnav{
+    border-top:1px solid var(--line);
+  }
+  .mainnav-inner{
+    display:flex; gap:2px;
+    flex-wrap:wrap;
+  }
+  .mainnav-inner button{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    background:none; border:none; cursor:pointer;
+    color:var(--muted);
+    padding:14px 18px;
+    position:relative;
+    transition:color .2s ease;
+  }
+  .mainnav-inner button:hover{color:var(--ink);}
+  .mainnav-inner button.active{color:var(--ink);}
+  .mainnav-inner button.active::after{
+    content:"";
+    position:absolute; left:18px; right:18px; bottom:0;
+    height:2px; background:var(--rust);
+  }
+  .mainnav-inner button .n{color:var(--rust); margin-right:6px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:64px 0 50px 0;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .hero-eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rust); margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero-eyebrow::before{content:"";width:28px;height:1px;background:var(--rust);}
+  .hero h2{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:clamp(34px, 5.4vw, 64px);
+    line-height:1.04;
+    max-width:880px;
+    letter-spacing:-.01em;
+  }
+  .hero h2 em{font-style:italic; color:var(--rust); font-weight:400;}
+  .hero p.lede{
+    font-size:16px;
+    color:var(--muted);
+    max-width:560px;
+    margin-top:22px;
+    line-height:1.6;
+  }
+  .hero-stats{
+    display:flex; gap:0;
+    margin-top:46px;
+    border-top:1px solid var(--line);
+  }
+  .hero-stats .stat{
+    flex:1;
+    padding:18px 24px 0 0;
+    border-right:1px solid var(--line);
+  }
+  .hero-stats .stat:last-child{border-right:none;}
+  .hero-stats .stat .num{
+    font-family:var(--display);
+    font-size:clamp(28px,3vw,40px);
+    font-weight:500;
+    color:var(--rust);
+  }
+  .hero-stats .stat .lab{
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* ---------- SECTION HEAD ---------- */
+  .section{padding:56px 0;}
+  .section.tight{padding-top:40px;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:34px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:18px;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .section-head h3{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:clamp(26px,3vw,38px);
+  }
+  .section-head h3 em{font-style:italic;color:var(--rust);font-weight:400;}
+  .section-head .meta{
+    font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;
+  }
+
+  /* ---------- FILTER CHIPS ---------- */
+  .chiprow{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-bottom:30px;
+  }
+  .chip{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+    border:1px solid var(--line-strong);
+    background:transparent;
+    color:var(--ink);
+    padding:8px 14px;
+    border-radius:100px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .chip:hover{border-color:var(--rust); color:var(--rust);}
+  .chip.active{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+
+  /* ---------- VENUE GRID ---------- */
+  .venue-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line-strong);
+    border:1px solid var(--line-strong);
+  }
+  @media(max-width:900px){.venue-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:620px){.venue-grid{grid-template-columns:1fr;}}
+
+  .venue-card{
+    background:var(--paper);
+    padding:26px 24px;
+    cursor:pointer;
+    transition:background .2s ease;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    min-height:230px;
+  }
+  .venue-card:hover{background:var(--paper-2);}
+  .venue-card .vno{
+    font-family:var(--mono); font-size:11px; color:var(--rust); letter-spacing:.05em;
+  }
+  .venue-card h4{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:23px;
+    margin-top:10px;
+    line-height:1.15;
+  }
+  .venue-card .genre{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--muted); margin-top:10px;
+  }
+  .venue-card .zone{
+    font-size:13px; color:var(--muted); margin-top:auto; padding-top:18px;
+    display:flex; justify-content:space-between; align-items:center;
+    border-top:1px dashed var(--line); margin-top:18px;
+  }
+  .venue-card .rating{font-family:var(--mono); color:var(--rust); font-weight:500;}
+  .venue-card .arrow{
+    position:absolute; top:24px; right:24px;
+    font-size:18px; color:var(--muted);
+    transition:transform .2s ease, color .2s ease;
+  }
+  .venue-card:hover .arrow{transform:translate(3px,-3px); color:var(--rust);}
+
+  /* ---------- GENRES GRID ---------- */
+  .genre-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line-strong);
+    border:1px solid var(--line-strong);
+  }
+  @media(max-width:900px){.genre-grid{grid-template-columns:repeat(2,1fr);}}
+  .genre-card{
+    background:var(--paper);
+    padding:30px 22px;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease;
+  }
+  .genre-card:hover{background:var(--ink); color:var(--paper);}
+  .genre-card:hover .gcount{color:var(--rust);}
+  .genre-card h5{font-family:var(--display); font-size:22px; font-weight:500;}
+  .genre-card .gcount{font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:8px;}
+
+  /* ---------- MAP SECTION ---------- */
+  .map-shell{
+    border:1px solid var(--line-strong);
+    background:var(--paper-2);
+    position:relative;
+    height:560px;
+    overflow:hidden;
+  }
+  #leaflet-map{height:100%; width:100%; filter:sepia(.18) saturate(.7) contrast(1.02);}
+  .map-legend{
+    position:absolute; bottom:18px; left:18px; z-index:500;
+    background:var(--paper); border:1px solid var(--line-strong);
+    padding:14px 16px;
+    font-family:var(--mono); font-size:11px;
+    max-width:200px;
+    box-shadow:4px 4px 0 var(--ink);
+  }
+  .map-legend .dot{width:8px;height:8px; border-radius:50%; background:var(--rust); display:inline-block; margin-right:8px;}
+
+  /* ---------- DETAIL PANEL (drawer) ---------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(27,27,24,.5);
+    backdrop-filter:blur(2px);
+    z-index:900;
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease;
+  }
+  .overlay.show{opacity:1; pointer-events:auto;}
+  .drawer{
+    position:fixed; top:0; right:0; height:100%;
+    width:min(440px, 92vw);
+    background:var(--paper);
+    border-left:3px solid var(--ink);
+    z-index:901;
+    transform:translateX(100%);
+    transition:transform .3s cubic-bezier(.22,.61,.36,1);
+    overflow-y:auto;
+    padding:30px 30px 50px 30px;
+  }
+  .drawer.show{transform:translateX(0);}
+  .drawer .close{
+    font-family:var(--mono); font-size:12px; text-transform:uppercase;
+    border:1px solid var(--line-strong);
+    background:none; cursor:pointer;
+    padding:8px 14px; border-radius:100px;
+    float:right;
+  }
+  .drawer .dno{font-family:var(--mono); font-size:11px; color:var(--rust); clear:both; padding-top:50px; display:block;}
+  .drawer h3{font-family:var(--display); font-size:34px; font-weight:500; margin-top:10px; line-height:1.05;}
+  .drawer .dgenre{font-family:var(--mono); font-size:12px; text-transform:uppercase; color:var(--muted); margin-top:10px;}
+  .drawer .ddesc{margin-top:22px; font-size:14.5px; line-height:1.7; color:var(--ink);}
+  .drawer .dmeta{margin-top:26px; border-top:1px solid var(--line); padding-top:20px;}
+  .drawer .dmeta-row{display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed var(--line); font-size:13px;}
+  .drawer .dmeta-row .k{font-family:var(--mono); color:var(--muted); text-transform:uppercase; font-size:11px;}
+  .drawer .dmeta-row .v{text-align:right; max-width:60%;}
+  .drawer .dcta{
+    display:block; text-align:center;
+    margin-top:26px;
+    background:var(--rust); color:var(--paper);
+    font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.05em;
+    padding:14px; border-radius:4px;
+  }
+
+  /* ---------- ABOUT STRIP ---------- */
+  .about-strip{
+    background:var(--ink); color:var(--paper);
+    padding:60px 0;
+  }
+  .about-grid{
+    display:grid; grid-template-columns:1.3fr 1fr;
+    gap:60px;
+  }
+  @media(max-width:800px){.about-grid{grid-template-columns:1fr;}}
+  .about-strip h3{
+    font-family:var(--display); font-weight:500; font-size:clamp(24px,3vw,34px);
+    line-height:1.2;
+  }
+  .about-strip h3 em{font-style:italic; color:#e8845a;}
+  .about-strip p{font-size:14.5px; line-height:1.7; color:#c9c4b6; margin-top:18px; max-width:480px;}
+  .about-list{font-family:var(--mono); font-size:12px; color:#c9c4b6;}
+  .about-list li{padding:10px 0; border-bottom:1px solid #ffffff22; display:flex; justify-content:space-between;}
+  .about-list li span:last-child{color:#e8845a;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:34px 0;
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  footer a:hover{color:var(--rust);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topline">
+  <div class="wrap topline-inner">
+    <span>Vol.01 <span class="dot">·</span> Milano <span class="dot">·</span> Live</span>
+    <span id="clock-line">19 Giugno 2026</span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap masthead-row">
+    <div class="brand">
+      <h1>Suona<em>Milano</em></h1>
+      <div class="tagline">Palinsesto live · edizione quotidiana · Nº 01</div>
+    </div>
+    <div class="masthead-right">
+      Concerti · Jazz · Blues<br>
+      Rock · Elettronica · Hip-Hop<br>
+      Tutti i locali in un unico archivio
+    </div>
+  </div>
+  <nav class="mainnav">
+    <div class="wrap mainnav-inner">
+      <button class="active" data-view="oggi"><span class="n">01</span>Oggi</button>
+      <button data-view="locali"><span class="n">02</span>Locali</button>
+      <button data-view="generi"><span class="n">03</span>Generi</button>
+      <button data-view="mappa"><span class="n">04</span>Mappa</button>
+      <button data-view="contatti"><span class="n">05</span>Contatti</button>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ VIEW: OGGI ============ -->
+<section class="view active" id="view-oggi">
+
+  <div class="hero wrap">
+    <div class="hero-eyebrow">L'archivio libero della musica dal vivo</div>
+    <h2>Musica <em>dal vivo</em><br>nel capoluogo lombardo.</h2>
+    <p class="lede">Raccogliamo e organizziamo i locali live di Milano per aiutarti a scegliere la tua serata. Nessun tracciamento, nessun cookie. Solo la musica che ami, senza sorveglianza.</p>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="num">13</div><div class="lab">locali in archivio</div></div>
+      <div class="stat"><div class="num">7</div><div class="lab">generi musicali</div></div>
+      <div class="stat"><div class="num">9</div><div class="lab">zone coperte</div></div>
+      <div class="stat"><div class="num">001</div><div class="lab">edizione</div></div>
+    </div>
+  </div>
+
+  <div class="section wrap">
+    <div class="section-head">
+      <h3>In <em>evidenza</em> questa settimana</h3>
+      <div class="meta">selezione redazionale</div>
+    </div>
+    <div class="venue-grid" id="featured-grid"></div>
+  </div>
+
+</section>
+
+<!-- ============ VIEW: LOCALI ============ -->
+<section class="view" id="view-locali">
+  <div class="section wrap tight">
+    <div class="section-head">
+      <h3>I <em>locali</em><br>del capoluogo.</h3>
+      <div class="meta">indirizzi, contatti e atmosfera di ogni live club</div>
+    </div>
+    <div class="chiprow" id="chiprow-locali"></div>
+    <div class="venue-grid" id="locali-grid"></div>
+  </div>
+</section>
+
+<!-- ============ VIEW: GENERI ============ -->
+<section class="view" id="view-generi">
+  <div class="section wrap tight">
+    <div class="section-head">
+      <h3>Per <em>genere</em><br>musicale.</h3>
+      <div class="meta">dal jazz da camera all'elettronica underground</div>
+    </div>
+    <div class="genre-grid" id="genre-grid"></div>
+  </div>
+</section>
+
+<!-- ============ VIEW: MAPPA ============ -->
+<section class="view" id="view-mappa">
+  <div class="section wrap tight">
+    <div class="section-head">
+      <h3>Sulla <em>mappa</em>.</h3>
+      <div class="meta">geografia della musica dal vivo a Milano</div>
+    </div>
+    <div class="map-shell">
+      <div id="leaflet-map"></div>
+      <div class="map-legend"><span class="dot"></span>13 locali geolocalizzati</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIEW: CONTATTI ============ -->
+<section class="view" id="view-contatti">
+  <div class="section wrap tight">
+    <div class="section-head">
+      <h3>Segnala un <em>locale</em>.</h3>
+      <div class="meta">aiutaci a tenere l'archivio aggiornato</div>
+    </div>
+    <div style="max-width:560px;">
+      <p style="color:var(--muted); font-size:14.5px; line-height:1.7; margin-bottom:30px;">
+        Conosci un locale milanese con musica dal vivo che manca dall'archivio? Scrivici nome, indirizzo e genere prevalente: lo verifichiamo e lo aggiungiamo alla prossima edizione.
+      </p>
+      <form id="contact-form" style="display:flex; flex-direction:column; gap:14px;">
+        <input required placeholder="Nome del locale" style="font-family:var(--body); font-size:14px; padding:14px; border:1px solid var(--line-strong); background:var(--paper); border-radius:2px;">
+        <input placeholder="Indirizzo / zona" style="font-family:var(--body); font-size:14px; padding:14px; border:1px solid var(--line-strong); background:var(--paper); border-radius:2px;">
+        <textarea placeholder="Genere musicale, note, link" rows="4" style="font-family:var(--body); font-size:14px; padding:14px; border:1px solid var(--line-strong); background:var(--paper); border-radius:2px; resize:vertical;"></textarea>
+        <button type="submit" style="font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.05em; background:var(--rust); color:var(--paper); border:none; padding:15px; border-radius:2px; cursor:pointer;">Invia segnalazione</button>
+      </form>
+      <p id="form-confirm" style="display:none; margin-top:16px; font-family:var(--mono); font-size:12px; color:var(--rust);">✓ Segnalazione inviata con successo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT STRIP ============ -->
+<div class="about-strip">
+  <div class="wrap about-grid">
+    <div>
+      <h3>Non siamo ancora <em>quello che vogliamo</em><br>diventare. Ma ci stiamo lavorando, ogni giorno.</h3>
+      <p>SuonaMilano è un archivio indipendente, costruito a partire dai dati pubblici sui locali e aggiornato periodicamente. Il nostro obiettivo è semplice: un solo posto dove trovare la musica dal vivo della città, senza rumore.</p>
+    </div>
+    <ul class="about-list">
+      <li><span>Locali in archivio</span><span>13</span></li>
+      <li><span>Zone coperte</span><span>9</span></li>
+      <li><span>Generi catalogati</span><span>7</span></li>
+      <li><span>Edizione corrente</span><span>Nº 01 — 2026</span></li>
+    </ul>
+  </div>
+</div>
+
+<footer class="wrap">
+  <span>SuonaMilano è una ideazione indipendente · © 2026</span>
+  <span>Dati aggiornati periodicamente · <a href="#" onclick="switchView('contatti'); return false;">+ Segnala un locale</a></span>
+</footer>
+
+<!-- ============ DRAWER / DETAIL ============ -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <button class="close" onclick="closeDrawer()">✕ chiudi</button>
+  <span class="dno" id="d-no">— / 13</span>
+  <h3 id="d-name">—</h3>
+  <div class="dgenre" id="d-genre">—</div>
+  <div class="ddesc" id="d-desc">—</div>
+  <div class="dmeta">
+    <div class="dmeta-row"><span class="k">Zona</span><span class="v" id="d-zone">—</span></div>
+    <div class="dmeta-row"><span class="k">Indirizzo</span><span class="v" id="d-addr">—</span></div>
+    <div class="dmeta-row"><span class="k">Telefono</span><span class="v" id="d-phone">—</span></div>
+    <div class="dmeta-row"><span class="k">Rating</span><span class="v" id="d-rating">—</span></div>
+  </div>
+  <a class="dcta" id="d-link" href="#" target="_blank">→ Sito ufficiale</a>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+
+// ===================== DATI LOCALI =====================
+const venues = [
+  {
+    name:"Blue Note Milano",
+    genre:"Jazz",
+    zone:"Isola",
+    address:"Via Pietro Borsieri, 37, 20159 Milano",
+    phone:"+39 02 6901 6888",
+    rating:4.6,
+    lat:45.4893667, lng:9.1884942,
+    site:"https://www.bluenotemilano.com/",
+    desc:"Il jazz club per eccellenza della città: programmazione internazionale, sale a cena e un palco che ha ospitato alcuni dei nomi più importanti della scena jazz mondiale. Prenotazione consigliata, soprattutto nel weekend."
+  },
+  {
+    name:"Osteria Del Jazz",
+    genre:"Jazz",
+    zone:"San Siro",
+    address:"Via Filippo Carcano, 8, 20149 Milano",
+    phone:"+39 393 480 2491",
+    rating:4.3,
+    lat:45.4746054, lng:9.1478113,
+    site:"https://www.facebook.com/people/osteria-del-Jazz/100063584289827/",
+    desc:"Locale piccolo e raccolto, cena a prezzo fisso accompagnata da musicisti dal vivo. Atmosfera intima, da prenotare con anticipo."
+  },
+  {
+    name:"Spirit de Milan",
+    genre:"Jazz / Swing",
+    zone:"Bovisa",
+    address:"Via Bovisasca, 59, 20157 Milano",
+    phone:"+39 366 721 5569",
+    rating:4.3,
+    lat:45.5068095, lng:9.1593089,
+    site:"http://spiritdemilan.it/",
+    desc:"Ex fabbrica riconvertita in ristorante, bar e sala concerti. La domenica ospita jazz dal vivo in un grande spazio industriale, con tanto di lindy hop tra i tavoli."
+  },
+  {
+    name:"Legend Club",
+    genre:"Rock / Metal",
+    zone:"QT8 / Bovisa",
+    address:"Viale Enrico Fermi, 98, 20161 Milano",
+    phone:"+39 380 364 5564",
+    rating:4.2,
+    lat:45.5161661, lng:9.1793207,
+    site:"https://legendclub.jimdofree.com/",
+    desc:"Locale di dimensioni contenute ma acustica eccellente. Programmazione concentrata su rock e metal, atmosfera da club intimo."
+  },
+  {
+    name:"Rock'n'Roll Milano",
+    genre:"Rock",
+    zone:"Città Studi",
+    address:"Via Giuseppe Bruschetti, 11, 20125 Milano",
+    phone:"+39 02 2318 8575",
+    rating:4.3,
+    lat:45.4925397, lng:9.2076098,
+    site:"http://www.rocknrollclub.it/",
+    desc:"Pub a tema rock classico anni '80 e '90, con punte di punk e indie. Palco interno per band live e una collezione di cimeli musicali alle pareti."
+  },
+  {
+    name:"BLUES CANAL",
+    genre:"Blues",
+    zone:"Navigli",
+    address:"Via Casale, 7, 20144 Milano",
+    phone:"+39 02 836 0799",
+    rating:4.5,
+    lat:45.451474, lng:9.170964,
+    site:"http://www.bluescanalmilano.com/",
+    desc:"Pub in pieno stile americano sui Navigli, tra burger, birre e musica blues dal vivo. Atmosfera conviviale, spesso affollato nei weekend."
+  },
+  {
+    name:"Nidaba Theatre",
+    genre:"Blues / Soul",
+    zone:"Navigli",
+    address:"Via Emilio Gola, 12, 20143 Milano",
+    phone:"+39 339 347 7512",
+    rating:4.7,
+    lat:45.4489922, lng:9.1758037,
+    site:"http://www.nidaba.it/",
+    desc:"Piccolo teatro-bar dal carattere autentico: concerti per platee di 30-40 persone, con un legame diretto tra artista e pubblico raro da trovare altrove."
+  },
+  {
+    name:"Alcatraz",
+    genre:"Rock / Indie",
+    zone:"Maciachini",
+    address:"Via Valtellina, 25, 20159 Milano",
+    phone:"+39 02 6901 6352",
+    rating:4.2,
+    lat:45.494689, lng:9.182658,
+    site:"http://www.alcatrazmilano.it/",
+    desc:"Una delle sale concerti più grandi della città: ospita artisti internazionali di rock, metal e indie, con balconata e ampia pista centrale."
+  },
+  {
+    name:"Santeria Toscana 31",
+    genre:"Multigenere",
+    zone:"Porta Romana",
+    address:"Viale Toscana, 31, 20136 Milano",
+    phone:"+39 02 2219 9381",
+    rating:4.2,
+    lat:45.445744, lng:9.1884588,
+    site:"http://www.santeria.milano.it/",
+    desc:"Centro culturale con bar, ristorante e un vero e proprio teatro interno: concerti, dj set e mostre si alternano sotto lo stesso tetto."
+  },
+  {
+    name:"Biko Club",
+    genre:"Hip-Hop / Elettronica",
+    zone:"Bande Nere",
+    address:"Via Ettore Ponti, 40, 20143 Milano",
+    phone:"+39 339 151 5043",
+    rating:4.4,
+    lat:45.4421897, lng:9.1537825,
+    site:"https://www.bikoclub.net/",
+    desc:"Riferimento cittadino per hip-hop e club culture, con un salotto separato per chi vuole staccare dalla pista. Concerti live e dj set di alto livello."
+  },
+  {
+    name:"Detune",
+    genre:"Elettronica",
+    zone:"Porta Venezia",
+    address:"Via Felice Casati, 24, 20124 Milano",
+    phone:null,
+    rating:4.8,
+    lat:45.4791232, lng:9.2030319,
+    site:"http://www.detune.it/",
+    desc:"Bar dal fronte discreto che nasconde, sul retro, un piccolo club techno con impianto audio di alto livello. Un segreto ben custodito della movida milanese."
+  },
+  {
+    name:"Bachelite cLab",
+    genre:"Jazz / World",
+    zone:"Lambrate",
+    address:"Via Vertoiba, 3, 20137 Milano",
+    phone:"+39 340 891 9707",
+    rating:4.2,
+    lat:45.4579776, lng:9.2190959,
+    site:"#",
+    desc:"Bistrot e sala concerti allo stesso tempo, con programmazione che spazia dal jazz alla musica brasiliana. Spazio piccolo e accogliente."
+  },
+  {
+    name:"Jazz Café Milano",
+    genre:"Jazz",
+    zone:"Sempione",
+    address:"Corso Sempione, 8, 20154 Milano",
+    phone:"+39 333 245 0813",
+    rating:4.1,
+    lat:45.4772991, lng:9.1707085,
+    site:"#",
+    desc:"Ristorante e bar con giardino, mini show jazz serale e atmosfera rilassata. Cucina e drink list curate, da provare in versione aperitivo."
+  },
+  {
+    name:"Live Club",
+    genre:"Rock / Metal",
+    zone:"Trezzo sull'Adda (hinterland)",
+    address:"Via Giuseppe Mazzini, 58, 20056 Trezzo sull'Adda MI",
+    phone:"+39 347 197 7297",
+    rating:4.5,
+    lat:45.5990404, lng:9.5168821,
+    site:"#",
+    desc:"Fuori dai confini cittadini ma punto di riferimento per concerti rock e metal internazionali nell'hinterland milanese. Ampio parcheggio."
+  },
+];
+
+// ===================== VIEW SWITCH =====================
+function switchView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.mainnav-inner button').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.mainnav-inner button[data-view="${name}"]`).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  if(name==='mappa'){ setTimeout(initMap, 50); }
+}
+document.querySelectorAll('.mainnav-inner button').forEach(btn=>{
+  btn.addEventListener('click', ()=>switchView(btn.dataset.view));
+});
+
+// ===================== CARD RENDER =====================
+function venueCard(v, idx){
+  return `
+  <div class="venue-card" onclick="openDrawer(${idx})">
+    <span class="arrow">↗</span>
+    <span class="vno">${String(idx+1).padStart(2,'0')} / 13</span>
+    <h4>${v.name}</h4>
+    <div class="genre">${v.genre}</div>
+    <div class="zone"><span>${v.zone}</span><span class="rating">★ ${v.rating}</span></div>
+  </div>`;
+}
+
+// featured = primi 6 ordinati per rating
+const featured = [...venues].sort((a,b)=>b.rating-a.rating).slice(0,6);
+document.getElementById('featured-grid').innerHTML = featured.map(v=>venueCard(v, venues.indexOf(v))).join('');
+
+// tutti i locali
+function renderLocaliGrid(filter='tutti'){
+  const list = filter==='tutti' ? venues : venues.filter(v=>v.genre.toLowerCase().includes(filter.toLowerCase()));
+  document.getElementById('locali-grid').innerHTML = list.map(v=>venueCard(v, venues.indexOf(v))).join('');
+}
+renderLocaliGrid();
+
+// chips generi
+const genreSet = ['Tutti','Jazz','Rock','Blues','Elettronica','Hip-Hop','Multigenere'];
+document.getElementById('chiprow-locali').innerHTML = genreSet.map(g=>
+  `<button class="chip ${g==='Tutti'?'active':''}" data-g="${g}">${g}</button>`
+).join('');
+document.querySelectorAll('#chiprow-locali .chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('#chiprow-locali .chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderLocaliGrid(chip.dataset.g==='Tutti' ? 'tutti' : chip.dataset.g);
+  });
+});
+
+// generi grid (conteggio)
+function renderGenres(){
+  const counts = {};
+  venues.forEach(v=>{
+    const g = v.genre.split('/')[0].trim();
+    counts[g] = (counts[g]||0)+1;
+  });
+  const html = Object.entries(counts).map(([g,c])=>`
+    <div class="genre-card" onclick="filterAndGo('${g}')">
+      <h5>${g}</h5>
+      <div class="gcount">${c} ${c===1?'locale':'locali'}</div>
+    </div>`).join('');
+  document.getElementById('genre-grid').innerHTML = html;
+}
+renderGenres();
+function filterAndGo(g){
+  switchView('locali');
+  const chip = [...document.querySelectorAll('#chiprow-locali .chip')].find(c=>c.dataset.g.toLowerCase()===g.toLowerCase());
+  if(chip){ chip.click(); } else { renderLocaliGrid(g); }
+}
+
+// ===================== DRAWER =====================
+function openDrawer(idx){
+  const v = venues[idx];
+  document.getElementById('d-no').textContent = `${String(idx+1).padStart(2,'0')} / 13`;
+  document.getElementById('d-name').textContent = v.name;
+  document.getElementById('d-genre').textContent = v.genre;
+  document.getElementById('d-desc').textContent = v.desc;
+  document.getElementById('d-zone').textContent = v.zone;
+  document.getElementById('d-addr').textContent = v.address;
+  document.getElementById('d-phone').textContent = v.phone || '— non disponibile';
+  document.getElementById('d-rating').textContent = `★ ${v.rating} / 5`;
+  document.getElementById('d-link').href = v.site;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('drawer').classList.add('show');
+}
+function closeDrawer(){
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('drawer').classList.remove('show');
+}
+
+// ===================== MAPPA =====================
+let mapInstance = null;
+function initMap(){
+  if(mapInstance) { mapInstance.invalidateSize(); return; }
+  mapInstance = L.map('leaflet-map', {scrollWheelZoom:false}).setView([45.4789, 9.1850], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:'&copy; OpenStreetMap'
+  }).addTo(mapInstance);
+
+  const rustIcon = L.divIcon({
+    className:'',
+    html:'<div style="width:14px;height:14px;border-radius:50%;background:#b5481f;border:2px solid #f3efe6;box-shadow:0 0 0 1px #1b1b18;"></div>',
+    iconSize:[14,14],
+    iconAnchor:[7,7]
+  });
+
+  venues.forEach((v,idx)=>{
+    const m = L.marker([v.lat, v.lng], {icon:rustIcon}).addTo(mapInstance);
+    m.bindPopup(`<strong>${v.name}</strong><br>${v.genre}<br>${v.zone}`);
+    m.on('click', ()=>openDrawer(idx));
+  });
+}
+
+// ===================== FORM =====================
+document.getElementById('contact-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('form-confirm').style.display='block';
+  this.reset();
+});
+
+// ===================== CLOCK LINE =====================
+(function(){
+  const d = new Date();
+  const opts = {day:'numeric', month:'long', year:'numeric'};
+  document.getElementById('clock-line').textContent = d.toLocaleDateString('it-IT', opts);
+})();
+
+</script>
+
+</body>
+</html>
